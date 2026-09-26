@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SolaX – Daglig data</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --bg:#0b0e13;--surface:#131720;--border:#252d3f;
+  --gold:#f5c542;--green:#3dd68c;--red:#ff6b6b;--blue:#4ea8de;
+  --muted:#5a6480;--text:#d8dff0;--text2:#8a95b0;
+  --mono:'DM Mono',monospace;--sans:'Segoe UI',sans-serif
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);padding:24px 16px}
+h1{color:var(--gold);font-size:1.3rem;margin-bottom:4px}
+.sub{color:var(--muted);font-size:.8rem;font-family:var(--mono);margin-bottom:24px}
+.cards{display:flex;gap:12px;flex-wrap:wrap;max-width:980px;margin-bottom:20px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;
+       padding:14px 20px;flex:1;min-width:140px}
+.stat .label{font-size:.68rem;color:var(--muted);font-family:var(--mono);text-transform:uppercase;
+              letter-spacing:.05em;margin-bottom:4px}
+.stat .val{font-size:1.4rem;font-family:var(--mono);font-weight:600}
+.stat .val.gold{color:var(--gold)}
+.stat .val.green{color:var(--green)}
+.stat .val.red{color:var(--red)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
+       padding:20px;margin-bottom:20px;max-width:980px}
+.card h2{font-size:.75rem;color:var(--muted);font-family:var(--mono);
+          text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+canvas{max-height:260px}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+th{text-align:right;color:var(--muted);font-family:var(--mono);font-size:.68rem;
+    text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--border)}
+th:first-child{text-align:left}
+td{text-align:right;padding:5px 8px;border-bottom:1px solid #1a2030;font-family:var(--mono)}
+td:first-child{text-align:left;color:var(--text2)}
+tr:hover td{background:#1a2030}
+</style>
+</head>
+<body>
+<h1>☀️ SolaX – Daglig solcellsdata</h1>
+<p class="sub">Uppdaterad 2026-09-26 19:53 · 1 dagar loggade</p>
+
+<div class="cards">
+  <div class="stat"><div class="label">Total produktion</div><div class="val gold">62.1 kWh</div></div>
+  <div class="stat"><div class="label">Total export</div><div class="val green">28.7 kWh</div></div>
+  <div class="stat"><div class="label">Total import</div><div class="val red">8.1 kWh</div></div>
+</div>
+
+<div class="card">
+  <h2>Daglig energi (kWh)</h2>
+  <canvas id="c1"></canvas>
+</div>
+
+<div class="card">
+  <h2>Daglig data</h2>
+  <table>
+    <thead><tr>
+      <th>Datum</th>
+      <th>Produktion (kWh)</th>
+      <th>AC-output (kWh)</th>
+      <th>Export (kWh)</th>
+      <th>Import (kWh)</th>
+    </tr></thead>
+    <tbody><tr><td>2026-09-26</td><td>62.10</td><td>54.00</td><td>28.70</td><td>8.09</td></tr>
+</tbody>
+  </table>
+</div>
+
+<script>
+const L=["2026-09-26"];
+const P=[62.10],AC=[54.00],EX=[28.70],IM=[8.09];
+new Chart('c1',{
+  type:'bar',
+  data:{labels:L,datasets:[
+    {label:'Produktion',data:P,backgroundColor:'rgba(245,197,66,.8)'},
+    {label:'Export',data:EX,backgroundColor:'rgba(61,214,140,.7)'},
+    {label:'Import',data:IM,backgroundColor:'rgba(255,107,107,.6)'},
+  ]},
+  options:{
+    responsive:true,
+    interaction:{mode:'index',intersect:false},
+    scales:{
+      x:{ticks:{color:'#5a6480',maxTicksLimit:30,maxRotation:45},grid:{color:'#1a2030'}},
+      y:{ticks:{color:'#5a6480'},grid:{color:'#1a2030'}}
+    },
+    plugins:{legend:{labels:{color:'#d8dff0',font:{size:11}}}}
+  }
+});
+</script>
+</body>
+</html>
