@@ -1,0 +1,40 @@
+name: Hämta daglig SolaX-data
+
+on:
+  schedule:
+    # Kör 21:00 UTC = 22:00 svensk sommartid / 22:00 vintertid
+    - cron: '0 21 * * *'
+  workflow_dispatch:  # Tillåt manuell körning från GitHub UI
+
+jobs:
+  hämta-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Behövs för att committa tillbaka
+
+    steps:
+      - name: Checka ut repo
+        uses: actions/checkout@v4
+
+      - name: Sätt upp Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Installera beroenden
+        run: pip install requests
+
+      - name: Hämta data
+        env:
+          SOLAX_CLIENT_ID:     ${{ secrets.SOLAX_CLIENT_ID }}
+          SOLAX_CLIENT_SECRET: ${{ secrets.SOLAX_CLIENT_SECRET }}
+          SOLAX_SN:            ${{ secrets.SOLAX_SN }}
+        run: python solax_daglig.py
+
+      - name: Committa och pusha uppdateringar
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add solax_data.csv docs/index.html
+          git diff --staged --quiet || git commit -m "data: $(date -u +%Y-%m-%d)"
+          git push
