@@ -1,16 +1,13 @@
 name: Hämta daglig SolaX-data
 
 on:
-  schedule:
-    # Kör 21:00 UTC = 22:00 svensk sommartid / 22:00 vintertid
-    - cron: '0 21 * * *'
-  workflow_dispatch:  # Tillåt manuell körning från GitHub UI
+  workflow_dispatch:
 
 jobs:
   hamta-data:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Behövs för att committa tillbaka
+      contents: write
 
     steps:
       - name: Checka ut repo
