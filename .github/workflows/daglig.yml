@@ -7,7 +7,7 @@ on:
   workflow_dispatch:  # Tillåt manuell körning från GitHub UI
 
 jobs:
-  hämta-data:
+  hamta-data:
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Behövs för att committa tillbaka
