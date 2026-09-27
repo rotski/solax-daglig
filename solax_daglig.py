@@ -12,8 +12,9 @@ Användning:
 """
 
 import argparse, csv, json, os, sys
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import requests
 
@@ -157,7 +158,7 @@ def generate_html(rows: dict):
             f'</tr>\n'
         )
 
-    last_update = datetime.now().strftime("%Y-%m-%d %H:%M")
+    last_update = datetime.now(ZoneInfo("Europe/Stockholm")).strftime("%Y-%m-%d %H:%M")
     n = len(sorted_rows)
 
     html = f"""<!DOCTYPE html>
