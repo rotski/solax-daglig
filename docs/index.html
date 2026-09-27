@@ -8,7 +8,7 @@
 <style>
 :root{
   --bg:#0b0e13;--surface:#131720;--border:#252d3f;
-  --gold:#f5c542;--green:#3dd68c;--red:#ff6b6b;--blue:#4ea8de;
+  --gold:#f5c542;--green:#3dd68c;--red:#ff6b6b;--blue:#4ea8de;--purple:#b57bee;
   --muted:#5a6480;--text:#d8dff0;--text2:#8a95b0;
   --mono:'DM Mono',monospace;--sans:'Segoe UI',sans-serif
 }
@@ -16,23 +16,16 @@
 body{background:var(--bg);color:var(--text);font-family:var(--sans);padding:24px 16px}
 h1{color:var(--gold);font-size:1.3rem;margin-bottom:4px}
 .sub{color:var(--muted);font-size:.8rem;font-family:var(--mono);margin-bottom:24px}
-.cards{display:flex;gap:12px;flex-wrap:wrap;max-width:980px;margin-bottom:20px}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;
-       padding:14px 20px;flex:1;min-width:140px}
-.stat .label{font-size:.68rem;color:var(--muted);font-family:var(--mono);text-transform:uppercase;
-              letter-spacing:.05em;margin-bottom:4px}
-.stat .val{font-size:1.4rem;font-family:var(--mono);font-weight:600}
-.stat .val.gold{color:var(--gold)}
-.stat .val.green{color:var(--green)}
-.stat .val.red{color:var(--red)}
-.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;
-       padding:20px;margin-bottom:20px;max-width:980px}
-.card h2{font-size:.75rem;color:var(--muted);font-family:var(--mono);
-          text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+.stats{display:flex;gap:12px;flex-wrap:wrap;max-width:980px;margin-bottom:20px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 20px;flex:1;min-width:130px}
+.stat .label{font-size:.65rem;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.stat .val{font-size:1.35rem;font-family:var(--mono);font-weight:600}
+.gold{color:var(--gold)}.green{color:var(--green)}.red{color:var(--red)}.blue{color:var(--blue)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;max-width:980px}
+.card h2{font-size:.75rem;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
 canvas{max-height:260px}
-table{width:100%;border-collapse:collapse;font-size:.8rem}
-th{text-align:right;color:var(--muted);font-family:var(--mono);font-size:.68rem;
-    text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.78rem}
+th{text-align:right;color:var(--muted);font-family:var(--mono);font-size:.65rem;text-transform:uppercase;padding:6px 8px;border-bottom:1px solid var(--border)}
 th:first-child{text-align:left}
 td{text-align:right;padding:5px 8px;border-bottom:1px solid #1a2030;font-family:var(--mono)}
 td:first-child{text-align:left;color:var(--text2)}
@@ -41,54 +34,65 @@ tr:hover td{background:#1a2030}
 </head>
 <body>
 <h1>☀️ SolaX – Daglig solcellsdata</h1>
-<p class="sub">Uppdaterad 2026-09-27 13:35 · 2 dagar loggade</p>
+<p class="sub">Uppdaterad 2026-09-27 13:51 · 6 dagar loggade</p>
 
-<div class="cards">
-  <div class="stat"><div class="label">Total produktion</div><div class="val gold">135.4 kWh</div></div>
-  <div class="stat"><div class="label">Total export</div><div class="val green">74.1 kWh</div></div>
-  <div class="stat"><div class="label">Total import</div><div class="val red">17.4 kWh</div></div>
+<div class="stats">
+  <div class="stat"><div class="label">Total produktion</div><div class="val gold">328.9 kWh</div></div>
+  <div class="stat"><div class="label">Total export</div><div class="val green">169.6 kWh</div></div>
+  <div class="stat"><div class="label">Total import</div><div class="val red">69.4 kWh</div></div>
+  <div class="stat"><div class="label">Bat laddning totalt</div><div class="val blue">88.6 kWh</div></div>
 </div>
 
 <div class="card">
   <h2>Daglig energi (kWh)</h2>
   <canvas id="c1"></canvas>
 </div>
+<div class="card">
+  <h2>Batteri – laddning & urladdning (kWh)</h2>
+  <canvas id="c2"></canvas>
+</div>
 
 <div class="card">
   <h2>Daglig data</h2>
   <table>
     <thead><tr>
-      <th>Datum</th>
-      <th>Produktion (kWh)</th>
-      <th>AC-output (kWh)</th>
-      <th>Export (kWh)</th>
-      <th>Import (kWh)</th>
+      <th>Datum</th><th>PV (kWh)</th><th>AC-out (kWh)</th>
+      <th>Export (kWh)</th><th>Import (kWh)</th>
+      <th>Bat laddning</th><th>Bat urladdning</th>
     </tr></thead>
-    <tbody><tr><td>2026-09-27</td><td>73.30</td><td>60.10</td><td>45.43</td><td>9.32</td></tr>
-<tr><td>2026-09-26</td><td>62.10</td><td>54.30</td><td>28.70</td><td>8.09</td></tr>
+    <tbody><tr><td>2026-09-27</td><td>77.00</td><td>63.60</td><td>48.40</td><td>9.32</td><td>16.70</td><td>5.60</td></tr>
+<tr><td>2026-09-26</td><td>62.10</td><td>54.80</td><td>28.70</td><td>11.39</td><td>18.40</td><td>13.90</td></tr>
+<tr><td>2026-09-25</td><td>44.50</td><td>39.30</td><td>16.52</td><td>12.80</td><td>17.30</td><td>14.20</td></tr>
+<tr><td>2026-09-24</td><td>92.70</td><td>87.40</td><td>55.78</td><td>11.09</td><td>17.20</td><td>15.30</td></tr>
+<tr><td>2026-09-23</td><td>50.60</td><td>42.90</td><td>20.19</td><td>12.56</td><td>18.20</td><td>13.10</td></tr>
+<tr><td>2026-09-22</td><td>2.00</td><td>7.80</td><td>0.04</td><td>12.27</td><td>0.80</td><td>7.00</td></tr>
 </tbody>
   </table>
 </div>
 
 <script>
-const L=["2026-09-26", "2026-09-27"];
-const P=[62.10,73.30],AC=[54.30,60.10],EX=[28.70,45.43],IM=[8.09,9.32];
+const L=["2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-26", "2026-09-27"];
+const P=[2.00,50.60,92.70,44.50,62.10,77.00],EX=[0.04,20.19,55.78,16.52,28.70,48.40],IM=[12.27,12.56,11.09,12.80,11.39,9.32],BC=[0.80,18.20,17.20,17.30,18.40,16.70],BD=[7.00,13.10,15.30,14.20,13.90,5.60];
 new Chart('c1',{
-  type:'bar',
-  data:{labels:L,datasets:[
+  type:'bar',data:{labels:L,datasets:[
     {label:'Produktion',data:P,backgroundColor:'rgba(245,197,66,.8)'},
     {label:'Export',data:EX,backgroundColor:'rgba(61,214,140,.7)'},
     {label:'Import',data:IM,backgroundColor:'rgba(255,107,107,.6)'},
   ]},
-  options:{
-    responsive:true,
-    interaction:{mode:'index',intersect:false},
-    scales:{
-      x:{ticks:{color:'#5a6480',maxTicksLimit:30,maxRotation:45},grid:{color:'#1a2030'}},
-      y:{ticks:{color:'#5a6480'},grid:{color:'#1a2030'}}
-    },
-    plugins:{legend:{labels:{color:'#d8dff0',font:{size:11}}}}
-  }
+  options:{responsive:true,interaction:{mode:'index',intersect:false},
+    scales:{x:{ticks:{color:'#5a6480',maxTicksLimit:30,maxRotation:45},grid:{color:'#1a2030'}},
+             y:{ticks:{color:'#5a6480'},grid:{color:'#1a2030'}}},
+    plugins:{legend:{labels:{color:'#d8dff0',font:{size:11}}}}}
+});
+new Chart('c2',{
+  type:'bar',data:{labels:L,datasets:[
+    {label:'Laddning',data:BC,backgroundColor:'rgba(78,168,222,.75)'},
+    {label:'Urladdning',data:BD,backgroundColor:'rgba(181,123,238,.65)'},
+  ]},
+  options:{responsive:true,interaction:{mode:'index',intersect:false},
+    scales:{x:{ticks:{color:'#5a6480',maxTicksLimit:30,maxRotation:45},grid:{color:'#1a2030'}},
+             y:{ticks:{color:'#5a6480'},grid:{color:'#1a2030'}}},
+    plugins:{legend:{labels:{color:'#d8dff0',font:{size:11}}}}}
 });
 </script>
 </body>
