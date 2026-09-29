@@ -34,12 +34,12 @@ tr:hover td{background:#1a2030}
 </head>
 <body>
 <h1>☀️ SolaX – Daglig solcellsdata</h1>
-<p class="sub">Uppdaterad 2026-09-28 22:30 · 7 dagar loggade</p>
+<p class="sub">Uppdaterad 2026-09-29 22:30 · 8 dagar loggade</p>
 
 <div class="stats">
-  <div class="stat"><div class="label">Total produktion</div><div class="val gold">385.2 kWh</div></div>
-  <div class="stat"><div class="label">Total export</div><div class="val green">201.3 kWh</div></div>
-  <div class="stat"><div class="label">Total import</div><div class="val red">85.3 kWh</div></div>
+  <div class="stat"><div class="label">Total produktion</div><div class="val gold">451.9 kWh</div></div>
+  <div class="stat"><div class="label">Total export</div><div class="val green">248.4 kWh</div></div>
+  <div class="stat"><div class="label">Total import</div><div class="val red">103.1 kWh</div></div>
   <div class="stat"><div class="label">Bat laddning totalt</div><div class="val blue">88.6 kWh</div></div>
 </div>
 
@@ -60,7 +60,8 @@ tr:hover td{background:#1a2030}
       <th>Export (kWh)</th><th>Import (kWh)</th>
       <th>Bat laddning</th><th>Bat urladdning</th>
     </tr></thead>
-    <tbody><tr><td>2026-09-28</td><td>47.60</td><td>57.50</td><td>25.76</td><td>15.84</td><td></td><td></td></tr>
+    <tbody><tr><td>2026-09-29</td><td>66.70</td><td>76.20</td><td>47.05</td><td>17.81</td><td></td><td></td></tr>
+<tr><td>2026-09-28</td><td>47.60</td><td>57.50</td><td>25.76</td><td>15.84</td><td></td><td></td></tr>
 <tr><td>2026-09-27</td><td>85.70</td><td>78.50</td><td>54.34</td><td>9.38</td><td>16.70</td><td>5.60</td></tr>
 <tr><td>2026-09-26</td><td>62.10</td><td>54.80</td><td>28.70</td><td>11.39</td><td>18.40</td><td>13.90</td></tr>
 <tr><td>2026-09-25</td><td>44.50</td><td>39.30</td><td>16.52</td><td>12.80</td><td>17.30</td><td>14.20</td></tr>
@@ -72,8 +73,8 @@ tr:hover td{background:#1a2030}
 </div>
 
 <script>
-const L=["2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-26", "2026-09-27", "2026-09-28"];
-const P=[2.00,50.60,92.70,44.50,62.10,85.70,47.60],EX=[0.04,20.19,55.78,16.52,28.70,54.34,25.76],IM=[12.27,12.56,11.09,12.80,11.39,9.38,15.84],BC=[0.80,18.20,17.20,17.30,18.40,16.70,null],BD=[7.00,13.10,15.30,14.20,13.90,5.60,null];
+const L=["2026-09-22", "2026-09-23", "2026-09-24", "2026-09-25", "2026-09-26", "2026-09-27", "2026-09-28", "2026-09-29"];
+const P=[2.00,50.60,92.70,44.50,62.10,85.70,47.60,66.70],EX=[0.04,20.19,55.78,16.52,28.70,54.34,25.76,47.05],IM=[12.27,12.56,11.09,12.80,11.39,9.38,15.84,17.81],BC=[0.80,18.20,17.20,17.30,18.40,16.70,null,null],BD=[7.00,13.10,15.30,14.20,13.90,5.60,null,null];
 new Chart('c1',{
   type:'bar',data:{labels:L,datasets:[
     {label:'Produktion',data:P,backgroundColor:'rgba(245,197,66,.8)'},
