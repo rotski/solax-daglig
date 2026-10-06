@@ -21,12 +21,23 @@ jobs:
       - name: Installera beroenden
         run: pip install requests
 
-      - name: Hämta data
+      - name: Hämta data (med retry)
         env:
           SOLAX_CLIENT_ID:     ${{ secrets.SOLAX_CLIENT_ID }}
           SOLAX_CLIENT_SECRET: ${{ secrets.SOLAX_CLIENT_SECRET }}
           SOLAX_SN:            ${{ secrets.SOLAX_SN }}
-        run: python solax_daglig.py
+        run: |
+          for i in 1 2 3; do
+            echo "Försök $i..."
+            python solax_daglig.py && break
+            if [ $i -lt 3 ]; then
+              echo "Misslyckades, väntar 15 minuter..."
+              sleep 900
+            else
+              echo "Alla 3 försök misslyckades."
+              exit 1
+            fi
+          done
 
       - name: Committa och pusha uppdateringar
         run: |
